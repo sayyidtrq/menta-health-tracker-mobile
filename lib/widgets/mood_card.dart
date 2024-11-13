@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mental_health_tracker/mood_entry.dart';
+import 'package:mental_health_tracker/screens/list_moodentry.dart';
+import 'package:mental_health_tracker/screens/moodentry_form.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ItemHomepage {
   final String name;
@@ -17,6 +20,7 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Material(
       // Menentukan warna latar belakang dari tema aplikasi.
       color: Theme.of(context).colorScheme.secondary,
@@ -25,7 +29,7 @@ class ItemCard extends StatelessWidget {
 
       child: InkWell(
         // Aksi ketika kartu ditekan.
-        onTap: () {
+        onTap: () async {
           // Menampilkan pesan SnackBar saat kartu ditekan.
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -35,6 +39,11 @@ class ItemCard extends StatelessWidget {
             // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup MoodEntryFormPage.
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MoodEntryFormPage()));
+          } else if (item.name == "Lihat Mood") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MoodEntryPage()),
+            );
           }
         },
         // Container untuk menyimpan Icon dan Text
